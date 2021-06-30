@@ -1,0 +1,28 @@
+# 
+# You can find the documentation at https://docs.fastlane.tools
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+FIREBASE_CLI_TOKEN = ENV["FIREBASE_CLI_TOKEN"]
+
+default_platform(:android)
+
+platform :android do
+  
+  before_all do
+  end
+
+  desc "Submit a new beta build to Google Play"
+  lane :beta do
+    sh "flutter build appbundle -v"
+    # upload_to_play_store
+  end
+
+  desc "Deploy with Firebase"
+  lane :firebase do
+    sh "flutter build apk"
+    # firebase_app_distribution
+  end
+end

@@ -1,0 +1,124 @@
+
+name: Build iOS
+on:
+  workflow_dispatch: 
+    inputs:
+        lane:
+          description: 'Fastlane lane to use (beta OR firebase OR production)'
+          required: true
+          default: 'firebase'
+ 
+
+jobs:
+  buildUnityIOS:
+    name: Build for ${{ matrix.targetPlatform }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        projectPath:
+          - unity/unity_project
+        unityVersion:
+          - 2019.4.27f1
+        targetPlatform:
+          - iOS
+
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        # with:
+          # lfs: true
+
+      # Cache Library
+      - uses: actions/cache@v2
+        with:
+          path: ${{ matrix.projectPath }}/Library
+          key: Library-${{ matrix.projectPath }}-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-${{ matrix.projectPath }}-
+            Library-
+
+      # Build Unity
+      - run: make enable_config_ios
+      - name: Build project
+        uses: game-ci/unity-builder@v2
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          allowDirtyBuild: true
+          projectPath: ${{ matrix.projectPath }}
+          unityVersion: ${{ matrix.unityVersion }}
+          targetPlatform: ${{ matrix.targetPlatform }}
+          buildMethod: Build.DoBuildIOS
+
+      - name: Upload Build to Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-iOS
+          path: ios/UnityLibrary
+
+
+  buildFlutterIOS:
+    name: Build iOS on MacOS
+    runs-on: macos-latest
+    needs: buildUnityIOS
+    env:
+      IOS_BUILD_PATH: ${{ format('{0}/ios', github.workspace) }}
+    steps:
+      # Set up Flutter.
+      - name: Clone Flutter repository with master channel
+        uses: subosito/flutter-action@v1.5.0
+        with:
+          channel: stable
+      - run: flutter doctor -v
+
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download iOS Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build-iOS
+          path: ios/UnityLibrary
+          
+      # Check result of Download iOS Artifact
+      - run: ls ios/UnityLibrary
+
+      # Before all, let `pub get`
+      - run: flutter pub get
+        
+      # Fix File Permissions (after build Unity)
+      - name: Fix File Permissions
+        id: terminal
+        run: |
+          find $IOS_BUILD_PATH -type f -name "**.sh" -exec chmod +x {} \;
+          find $IOS_BUILD_PATH -type f -iname "usymtool" -exec chmod +x {} \;
+
+      # Build to Sync dart code to ios native code
+      - run: flutter build ios --release --no-codesign
+
+      # Setup Ruby, Bundler, and Gemfile dependencies
+      - name: Setup Fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+          bundler-cache: true
+          working-directory: ios
+          
+      # Build and deploy with Fastlane (by default, to beta track) 🚀.
+      - name: Run fastlane deploy
+        run: bundle exec fastlane ${{ github.event.inputs.lane || 'beta' }}        
+        env:
+          FASTLANE_USER: ${{ secrets.FASTLANE_USER}}
+          FASTLANE_PASSWORD: ${{ secrets.FASTLANE_PASSWORD }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD}}
+          FASTLANE_TEAM_ID: ${{ secrets.FASTLANE_TEAM_ID }}
+          FASTLANE_ITC_TEAM_ID: ${{ secrets.FASTLANE_ITC_TEAM_ID}}
+          MATCH_APP_IDENTIFIER: ${{ secrets.MATCH_APP_IDENTIFIER}}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD}}
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{secrets.MATCH_GIT_BASIC_AUTHORIZATION}}
+          FIREBASE_CLI_TOKEN: ${{secrets.FIREBASE_CLI_TOKEN}}
+          FIREBASEAPPDISTRO_GROUPS: ${{secrets.FIREBASEAPPDISTRO_GROUPS}}
+        working-directory: ios

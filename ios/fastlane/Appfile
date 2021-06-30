@@ -1,0 +1,10 @@
+app_identifier("com.jimmyto9.testfastlane") # The bundle identifier of your app
+apple_id("khanhuitse05@gmail.com") # Your Apple email address
+# app_specific_password("use when first time beta")
+team_id("YJM7D2JJB6")
+itc_team_id("121235250")
+# TODO: update apple id and identifier
+
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
