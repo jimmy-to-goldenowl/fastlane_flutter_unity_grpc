@@ -74,7 +74,8 @@ public static class XcodePostBuild
         var projGuid = pbx.ProjectGuid();
 
         // Set skip_install to NO 
-        pbx.SetBuildProperty(targetGuid, "SKIP_INSTALL", "NO");
+        // Disable to fix: https://github.com/juicycleff/flutter-unity-view-widget/issues/381
+        // pbx.SetBuildProperty(targetGuid, "SKIP_INSTALL", "NO");
 
         // Set some linker flags
         pbx.SetBuildProperty(projGuid, "ENABLE_BITCODE", "YES");

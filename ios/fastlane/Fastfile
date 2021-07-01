@@ -112,13 +112,14 @@ platform :ios do
     build_app(
       scheme: "Runner",
       workspace: workspace,
-      export_method: (options[:release] ? "app-store" : "development"),
-      # archive_path: "./build/Runner.xcarchive",
-      # output_directory: "./build/Runner",
+      # export_method: (options[:release] ? "app-store" : "development"),
+      ### archive_path: "./build/Runner.xcarchive",
+      ### output_directory: "./build/Runner",
       xcargs: settings_to_override,
+      skip_profile_detection: true,
       export_options: {
         provisioningProfiles: { 
-          APP_IDENTIFIER => ENV['PROVISIONING_PROFILE_SPECIFIER']
+          APP_IDENTIFIER => ENV['PROVISIONING_PROFILE_SPECIFIER'],
         }
       }
     )
