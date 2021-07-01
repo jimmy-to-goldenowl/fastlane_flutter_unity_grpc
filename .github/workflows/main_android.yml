@@ -67,10 +67,13 @@ jobs:
       # Check export result
       - run: sudo ls android/unityLibrary
 
-      # Try fix File permission
-      - run: sudo $FLUTTER_ROOT/bin/flutter pub get
-      - run: sudo chown -R $USER $FLUTTER_ROOT
-      - run: sudo chown -R $USER $PROJECT_PATH
+      # Run Fix File permission
+      - name: Fix File Permissions
+        id: terminal
+        run: |
+          sudo $FLUTTER_ROOT/bin/flutter pub get
+          sudo chown -R $USER $FLUTTER_ROOT
+          sudo chown -R $USER $PROJECT_PATH
 
       
       # Setup Ruby, Bundler, and Gemfile dependencies
