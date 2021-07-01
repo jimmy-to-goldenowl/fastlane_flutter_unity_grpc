@@ -72,7 +72,7 @@ jobs:
       # Try fix File permission
       - run: sudo $FLUTTER_ROOT/bin/flutter pub get
       - run: sudo chown -R $USER $FLUTTER_ROOT
-      - run: sudo chown -R $USER PROJECT_PATH
+      - run: sudo chown -R $USER $PROJECT_PATH
 
       
       # Setup Ruby, Bundler, and Gemfile dependencies
