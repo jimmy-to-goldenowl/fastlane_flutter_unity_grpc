@@ -116,6 +116,7 @@ platform :ios do
       ### archive_path: "./build/Runner.xcarchive",
       ### output_directory: "./build/Runner",
       xcargs: settings_to_override,
+      ### skip because there are 2 more target: unity_framework & unity_project
       skip_profile_detection: true,
       export_options: {
         provisioningProfiles: { 
