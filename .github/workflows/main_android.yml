@@ -44,7 +44,7 @@ jobs:
         # with:
           # lfs: true
       - run: flutter clean
-      - run: flutter pub get
+      # - run: flutter pub get
 
       # Cache Library
       - uses: actions/cache@v2
@@ -70,7 +70,8 @@ jobs:
       - run: sudo ls android/unityLibrary
 
       # Try fix File permission
-      - run: chmod +x android/gradlew
+      - run: sudo $FLUTTER_ROOT pub get
+
       
       # Setup Ruby, Bundler, and Gemfile dependencies
       - name: Setup Fastlane
