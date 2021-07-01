@@ -44,7 +44,7 @@ jobs:
         # with:
           # lfs: true
       - run: flutter clean
-      # - run: flutter pub get
+      - run: sudo $FLUTTER_ROOT/bin pub get
 
       # Cache Library
       - uses: actions/cache@v2
