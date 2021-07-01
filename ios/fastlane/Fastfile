@@ -50,6 +50,28 @@ platform :ios do
   end
 
   desc 'Fetch certificates and provisioning profiles'
+  lane :certificates_manually do |options|
+   
+    ENV['PROVISIONING_PROFILE_SPECIFIER'] = "match " + (options[:release] ? "AppStore " : "Development ") + ENV["MATCH_APP_IDENTIFIER"]
+
+    match(
+      app_identifier: APP_IDENTIFIER,
+      type: (options[:release] ? "appstore" : "development"),
+      readonly: true,
+    )
+
+    update_code_signing_settings(
+      bundle_identifier: APP_IDENTIFIER,
+      use_automatic_signing: false,
+      path: xcodeproj,
+      targets: "Runner",
+      # build_configurations: (options[:release] ? "Release" : "Release"),
+      code_sign_identity: (options[:release] ? "Apple Distribution" : "Apple Development"),
+      profile_name: ENV['PROVISIONING_PROFILE_SPECIFIER']
+    )
+  end
+
+  desc 'Fetch certificates and provisioning profiles'
   lane :certificates do |options|
    
     ENV['PROVISIONING_PROFILE_SPECIFIER'] = "match " + (options[:release] ? "AppStore " : "Development ") + ENV["MATCH_APP_IDENTIFIER"]

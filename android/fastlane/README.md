@@ -21,16 +21,6 @@ or alternatively using `brew install fastlane`
 fastlane android beta
 ```
 Submit a new beta build to Google Play
-### android promote_to_production
-```
-fastlane android promote_to_production
-```
-Promote beta track to prod
-### android production
-```
-fastlane android production
-```
-Submit a new production build to Google Play
 ### android firebase
 ```
 fastlane android firebase
