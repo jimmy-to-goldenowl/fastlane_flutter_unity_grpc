@@ -70,13 +70,13 @@ jobs:
       
           
       # Build and deploy with Fastlane (by default, to beta track) 🚀.
-      - name: Setup-ruby
-      - uses: actions/setup-ruby@v1
-        with:
-          ruby-version: '2.7.2'
+      # - name: Setup-ruby
+      # - uses: actions/setup-ruby@v1
+      #   with:
+      #     ruby-version: '2.7.2'
 
-      - name: Run fastlane deploy
-        uses: maierj/fastlane-action@v2.0.1
+      - name: Deploy iOS via maierj/Fastlane
+        uses: maierj/fastlane-action@v1.4.0
         with:
           lane: ${{ github.event.inputs.lane || 'firebase' }}
           subdirectory: 'android'
