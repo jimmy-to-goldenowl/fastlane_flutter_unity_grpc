@@ -21,6 +21,11 @@ or alternatively using `brew install fastlane`
 fastlane ios increment_build_number_manually
 ```
 
+### ios certificates_manually
+```
+fastlane ios certificates_manually
+```
+Fetch certificates and provisioning profiles
 ### ios certificates
 ```
 fastlane ios certificates
