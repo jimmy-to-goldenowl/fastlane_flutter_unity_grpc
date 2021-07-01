@@ -66,8 +66,7 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           buildMethod: Build.DoBuildAndroid
 
-      - run: ls android/unityLibrary
-      - run: sudo flutter clean
+      - run: sudo ls android/unityLibrary
       # Setup Ruby, Bundler, and Gemfile dependencies
       - name: Setup Fastlane
         uses: ruby/setup-ruby@v1
