@@ -66,7 +66,12 @@ jobs:
           targetPlatform: ${{ matrix.targetPlatform }}
           buildMethod: Build.DoBuildAndroid
 
+      # Check export result
       - run: sudo ls android/unityLibrary
+
+      # Try fix File permission
+      - run: chmod +x gradlew
+      
       # Setup Ruby, Bundler, and Gemfile dependencies
       - name: Setup Fastlane
         uses: ruby/setup-ruby@v1
