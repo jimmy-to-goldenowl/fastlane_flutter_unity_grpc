@@ -44,7 +44,7 @@ jobs:
         # with:
           # lfs: true
       - run: flutter clean
-      - run: sudo $FLUTTER_ROOT/bin/flutter pub get
+      - run: flutter pub get
 
       # Cache Library
       - uses: actions/cache@v2
@@ -70,7 +70,7 @@ jobs:
       - run: sudo ls android/unityLibrary
 
       # Try fix File permission
-      - run: sudo $FLUTTER_ROOT/bin/flutter pub get
+      - run: sudo chown -R $USER $FLUTTER_ROOT
 
       
       # Setup Ruby, Bundler, and Gemfile dependencies
