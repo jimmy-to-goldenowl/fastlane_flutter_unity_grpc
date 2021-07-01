@@ -71,6 +71,7 @@ jobs:
 
       # Try fix File permission
       - run: sudo chown -R $USER $FLUTTER_ROOT
+      - run: sudo chown -R $USER PROJECT_PATH
 
       
       # Setup Ruby, Bundler, and Gemfile dependencies
