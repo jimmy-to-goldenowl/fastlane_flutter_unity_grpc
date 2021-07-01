@@ -3,7 +3,7 @@
 # https://game.ci/docs/github/getting-started
 #
 
-name: Build Android
+name: Build Android With Maierj
 on:
   workflow_dispatch: 
     inputs:
@@ -67,20 +67,22 @@ jobs:
           buildMethod: Build.DoBuildAndroid
 
       - run: sudo ls android/unityLibrary
-      # Setup Ruby, Bundler, and Gemfile dependencies
-      - name: Setup Fastlane
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '2.6'
-          bundler-cache: true
-          working-directory: android
+      
           
       # Build and deploy with Fastlane (by default, to beta track) 🚀.
+      - name: Setup-ruby
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.7.2'
+
       - name: Run fastlane deploy
-        run: sudo bundle exec fastlane ${{ github.event.inputs.lane || 'firebase' }}
+        uses: maierj/fastlane-action@v2.0.1
+        with:
+          lane: ${{ github.event.inputs.lane || 'firebase' }}
+          subdirectory: 'android'
         env:
           FIREBASE_CLI_TOKEN: ${{secrets.FIREBASE_CLI_TOKEN}}
           FIREBASEAPPDISTRO_GROUPS: ${{secrets.FIREBASEAPPDISTRO_GROUPS}}
-        working-directory: android
+       
 
   

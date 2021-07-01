@@ -3,7 +3,7 @@
 # https://game.ci/docs/github/getting-started
 #
 
-name: Build Android
+name: Build Android With Another Job 
 on:
   workflow_dispatch: 
     inputs:
@@ -14,7 +14,7 @@ on:
  
 
 jobs:
-  buildAndroid:
+  buildUnityAndroid:
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-18.04
     env:
@@ -29,22 +29,13 @@ jobs:
           - 2019.4.27f1
         targetPlatform:
           - Android
-
     steps:
-      # Set up Flutter.
-      - name: Clone Flutter repository with master channel
-        uses: subosito/flutter-action@v1.5.0
-        with:
-          channel: stable
-      - run: flutter doctor -v
 
       # Checkout
       - name: Checkout repository
         uses: actions/checkout@v2
         # with:
           # lfs: true
-      - run: flutter clean
-      - run: flutter pub get
 
       # Cache Library
       - uses: actions/cache@v2
@@ -65,8 +56,45 @@ jobs:
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
           buildMethod: Build.DoBuildAndroid
+      
 
-      - run: sudo ls android/unityLibrary
+      - name: Upload Build to Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-Andoird
+          path: android/unityLibrary
+
+  buildFlutterIOS:
+    name: Build Android on Ubuntu
+    runs-on: ubuntu-18.04
+    needs: buildUnityAndroid
+    env:
+      ANDROID_BUILD_PATH: ${{ format('{0}/android', github.workspace) }}
+    steps:
+
+      # Set up Flutter.
+      - name: Clone Flutter repository with master channel
+        uses: subosito/flutter-action@v1.5.0
+        with:
+          channel: stable
+      - run: flutter doctor -v
+
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Download iOS Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build-Andoird
+          path: android/unityLibrary
+          
+      # Check result of Download iOS Artifact
+      - run: ls android/unityLibrary
+
+      # Before all, let `pub get`
+      - run: flutter pub get
+     
       # Setup Ruby, Bundler, and Gemfile dependencies
       - name: Setup Fastlane
         uses: ruby/setup-ruby@v1
