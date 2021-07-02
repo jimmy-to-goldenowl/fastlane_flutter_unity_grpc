@@ -20,7 +20,7 @@ or alternatively using `brew install fastlane`
 ```
 fastlane ios increment_build_number_manually
 ```
-
+Increment build number greater than number in store
 ### ios certificates_manually
 ```
 fastlane ios certificates_manually
