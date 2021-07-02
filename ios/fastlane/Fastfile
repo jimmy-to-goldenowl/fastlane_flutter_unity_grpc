@@ -42,6 +42,7 @@ platform :ios do
   before_all do
   end
 
+  desc 'Increment build number greater than number in store'
   lane :increment_build_number_manually do
     increment_build_number({
       xcodeproj: xcodeproj,
@@ -51,9 +52,7 @@ platform :ios do
 
   desc 'Fetch certificates and provisioning profiles'
   lane :certificates_manually do |options|
-   
     ENV['PROVISIONING_PROFILE_SPECIFIER'] = "match " + (options[:release] ? "AppStore " : "Development ") + ENV["MATCH_APP_IDENTIFIER"]
-
     match(
       app_identifier: APP_IDENTIFIER,
       type: (options[:release] ? "appstore" : "development"),
@@ -65,7 +64,6 @@ platform :ios do
       use_automatic_signing: false,
       path: xcodeproj,
       targets: "Runner",
-      # build_configurations: (options[:release] ? "Release" : "Release"),
       code_sign_identity: (options[:release] ? "Apple Distribution" : "Apple Development"),
       profile_name: ENV['PROVISIONING_PROFILE_SPECIFIER']
     )
@@ -73,9 +71,7 @@ platform :ios do
 
   desc 'Fetch certificates and provisioning profiles'
   lane :certificates do |options|
-   
     ENV['PROVISIONING_PROFILE_SPECIFIER'] = "match " + (options[:release] ? "AppStore " : "Development ") + ENV["MATCH_APP_IDENTIFIER"]
-   
     ensure_temp_keychain(keychainName, keychainPassword)
 
     match(
@@ -99,7 +95,6 @@ platform :ios do
 
   desc "Setup and Build with options"
   private_lane :build do |options|
-   
     # increment_build_number_manually
     certificates(release: options[:release], profile_name: ENV["PROVISIONING_PROFILE_SPECIFIER"])
   
@@ -112,10 +107,10 @@ platform :ios do
     build_app(
       scheme: "Runner",
       workspace: workspace,
+      xcargs: settings_to_override,
       # export_method: (options[:release] ? "app-store" : "development"),
       ### archive_path: "./build/Runner.xcarchive",
       ### output_directory: "./build/Runner",
-      xcargs: settings_to_override,
       ### skip because there are 2 more target: unity_framework & unity_project
       skip_profile_detection: true,
       export_options: {
