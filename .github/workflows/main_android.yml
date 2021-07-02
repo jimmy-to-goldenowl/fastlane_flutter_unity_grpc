@@ -56,7 +56,7 @@ jobs:
 
       - name: Download grpc_unity_package
         if: steps.cache-unity-grpc.outputs.cache-hit != 'true'
-        id: terminal
+        id: terminal-download-grpc
         run: |
           curl -o ~/grpc_unity_package.zip "https://packages.grpc.io/archive/2021/07/3e19babc1e53a31b393ddc84f7c7b6fcd100e4ef-f5359c83-c239-4754-a5cf-ab95c15c7964/csharp/grpc_unity_package.2.39.0-dev202107011005.zip"
           unzip ~/grpc_unity_package.zip -d "unity/unity_project/Assets/"
@@ -89,7 +89,7 @@ jobs:
 
       # Run Fix File permission
       - name: Fix File Permissions
-        id: terminal
+        id: terminal-fix-permissions
         run: |
           sudo chown -R $USER $PROJECT_PATH
 
