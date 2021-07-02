@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Features/Sample/Sample.unity
     guid: ae5ab64f576e346c2b03d45554a80fd5
   m_configObjects:
-    com.unity.xr.arcore.PlayerSettings: {fileID: 11400000, guid: a1a14f365c6ba4f6f957d67dac0a1de2,
+    com.unity.xr.arcore.PlayerSettings: {fileID: 11400000, guid: 5e1a74f22bf3646fca32e64379256b34,
       type: 2}
-    com.unity.xr.arkit.PlayerSettings: {fileID: 11400000, guid: d0e2ba6ff314f43ddb00108cb9f279f2,
+    com.unity.xr.arkit.PlayerSettings: {fileID: 11400000, guid: 572ff97eac9c3469dbecd344356b232e,
       type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 155105c8c382245c5bc6be5e9d86575f,
       type: 2}

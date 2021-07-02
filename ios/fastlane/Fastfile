@@ -54,10 +54,11 @@ platform :ios do
 
   desc 'Fetch certificates and provisioning profiles'
   lane :certificates_manually do |options|
-    ENV["PROVISIONING_PROFILE_SPECIFIER"] = "match " + (options[:release] ? "AppStore " : "Development ") + ENV["MATCH_APP_IDENTIFIER"]
+    ENV["PROVISIONING_PROFILE_SPECIFIER"] = "match " + (options[:release] == true ? "AppStore " : "Development ") + ENV["MATCH_APP_IDENTIFIER"]
+
     match(
       app_identifier: ENV["MATCH_APP_IDENTIFIER"],
-      type: (options[:release] ? "appstore" : "development"),
+      type: (options[:release] == true ? "appstore" : "development"),
       readonly: true,
     )
 
@@ -66,19 +67,19 @@ platform :ios do
       use_automatic_signing: false,
       path: xcodeproj,
       targets: "Runner",
-      code_sign_identity: (options[:release] ? "Apple Distribution" : "Apple Development"),
+      code_sign_identity: (options[:release] == true ? "Apple Distribution" : "Apple Development"),
       profile_name: ENV["PROVISIONING_PROFILE_SPECIFIER"]
     )
   end
 
   desc 'Fetch certificates and provisioning profiles'
   lane :certificates do |options|
-    ENV["PROVISIONING_PROFILE_SPECIFIER"] = "match " + (options[:release] ? "AppStore " : "Development ") + ENV["MATCH_APP_IDENTIFIER"]
+    ENV["PROVISIONING_PROFILE_SPECIFIER"] = "match " + (options[:release] == true ? "AppStore " : "Development ") + ENV["MATCH_APP_IDENTIFIER"]
     ensure_temp_keychain(keychainName, keychainPassword)
 
     match(
       app_identifier: ENV["MATCH_APP_IDENTIFIER"],
-      type: (options[:release] ? "appstore" : "development"),
+      type: (options[:release] == true ? "appstore" : "development"),
       readonly: true,
       keychain_name: keychainName,
       keychain_password: keychainPassword,
@@ -90,7 +91,7 @@ platform :ios do
       path: xcodeproj,
       targets: "Runner",
       # build_configurations: (options[:release] ? "Release" : "Release"),
-      code_sign_identity: (options[:release] ? "Apple Distribution" : "Apple Development"),
+      code_sign_identity: (options[:release] == true ? "Apple Distribution" : "Apple Development"),
       profile_name: ENV["PROVISIONING_PROFILE_SPECIFIER"]
     )
   end

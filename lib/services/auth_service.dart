@@ -21,20 +21,22 @@ class AuthService {
     });
   }
 
-  Future<Result<LUser>> loginWithEmail({required String email, required String password}) async {
+  Future<Result<LUser>> loginWithEmail(
+      {required String email, required String password}) async {
     try {
-      final UserCredential user =
-          await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      final UserCredential user = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
       return _handleLogin(user.user, loginType: LoginType.email);
     } catch (e) {
       return Result.exception(e);
     }
   }
 
-  Future<Result<LUser>> signUpWithEmail({required String password, required String email}) async {
+  Future<Result<LUser>> signUpWithEmail(
+      {required String password, required String email}) async {
     try {
-      final UserCredential user =
-          await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      final UserCredential user = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
       return _handleLogin(user.user, loginType: LoginType.email);
     } catch (e) {
       return Result.exception(e);
@@ -43,12 +45,7 @@ class AuthService {
 
   Future<Result<LUser>> loginWithGoogle() async {
     try {
-      final GoogleSignIn _googleSignIn = GoogleSignIn(
-        scopes: <String>[
-          'email',
-          'https://www.googleapis.com/auth/contacts.readonly',
-        ],
-      );
+      final GoogleSignIn _googleSignIn = GoogleSignIn();
 
       final bool isSignedIn = await _googleSignIn.isSignedIn();
       if (isSignedIn) {
@@ -59,7 +56,8 @@ class AuthService {
 
       final credential = GoogleAuthProvider.credential(
           accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
-      final UserCredential user = await FirebaseAuth.instance.signInWithCredential(credential);
+      final UserCredential user =
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
       return _handleLogin(user.user, loginType: LoginType.google);
     } catch (e) {
@@ -96,10 +94,14 @@ class AuthService {
   }
 
   Future logOut() async {
-    return showAlert(title: 'Logout', body: 'Are you sure you want to logout now?', actions: [
-      DialogButton('Yes', key: Key('confirm_button'), onPressed: _firebaseAuth.signOut),
-      DialogButton('No'),
-    ]);
+    return showAlert(
+        title: 'Logout',
+        body: 'Are you sure you want to logout now?',
+        actions: [
+          DialogButton('Yes',
+              key: Key('confirm_button'), onPressed: _firebaseAuth.signOut),
+          DialogButton('No'),
+        ]);
   }
 }
 
