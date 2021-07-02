@@ -1,4 +1,4 @@
-package com.loveblocks.flutter_fastlane;
+package com.jimmyto9.testfastlane;
 
 import androidx.test.rule.ActivityTestRule;
 import dev.flutter.plugins.integration_test.FlutterTestRunner;

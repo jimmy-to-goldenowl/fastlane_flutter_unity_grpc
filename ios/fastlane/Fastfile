@@ -10,7 +10,7 @@ workspace = './Runner.xcworkspace'
 keychainName = "loveblocs_custom"
 keychainPassword = "LoveBlocks2021"
 testGroup = "eng, goldenowl"
-testApp = "1:978524361958:ios:8433c15f3fed2da7cbd727"
+testApp = "1:387777038403:ios:d50ba4a78265f69e8becf6"
 
 def delete_temp_keychain(name)
   delete_keychain(

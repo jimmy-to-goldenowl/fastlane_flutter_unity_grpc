@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.loveblocks.flutter_fastlane">
+    package="com.jimmyto9.testfastlane">
 
    <uses-permission android:name="android.permission.WAKE_LOCK"/>
    <application

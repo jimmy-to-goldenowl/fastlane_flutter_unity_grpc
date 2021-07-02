@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_unity_widget/flutter_unity_widget.dart';
 
-class UnityScreen extends StatefulWidget {
-  const UnityScreen({Key? key}) : super(key: key);
+class UnityClientWidget extends StatefulWidget {
+  const UnityClientWidget({Key? key}) : super(key: key);
 
   @override
-  _UnityScreenState createState() => _UnityScreenState();
+  _UnityClientWidgetState createState() => _UnityClientWidgetState();
 }
 
-class _UnityScreenState extends State<UnityScreen> {
+class _UnityClientWidgetState extends State<UnityClientWidget> {
   // ignore: unused_field
   late UnityWidgetController _unityWidgetController;
-
   void onUnityCreated(UnityWidgetController controller) {
     this._unityWidgetController = controller;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: UnityWidget(onUnityCreated: onUnityCreated),
+    return UnityWidget(
+      onUnityCreated: onUnityCreated,
     );
   }
 }
