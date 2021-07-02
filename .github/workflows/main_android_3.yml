@@ -3,7 +3,7 @@
 # https://game.ci/docs/github/getting-started
 #
 
-name: Build Android
+name: Build Android 3
 on:
   workflow_dispatch: 
     inputs:
@@ -73,7 +73,7 @@ jobs:
         run: |
           sudo chown -R $USER $FLUTTER_ROOT
           sudo chown -R $USER $PROJECT_PATH
-          
+
       - run: flutter pub get
 
       

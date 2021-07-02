@@ -3,7 +3,7 @@
 # https://game.ci/docs/github/getting-started
 #
 
-name: Build Android
+name: Build Android 2
 on:
   workflow_dispatch: 
     inputs:
