@@ -56,7 +56,29 @@ public static class XcodePostBuild
         UpdateUnityProjectFiles(pathToBuiltProject);
 
         UpdateBuildSettings(pathToBuiltProject);
+
+        UpdateForGrpcPlugins(pathToBuiltProject);
     }
+
+    public static void UpdateForGrpcPlugins(string path)
+  {
+    var projectPath = PBXProject.GetPBXProjectPath(path);
+    var project = new PBXProject();
+    project.ReadFromString(File.ReadAllText(projectPath));
+#if UNITY_2019_3_OR_NEWER
+    var targetGuid = project.GetUnityFrameworkTargetGuid();
+#else
+    var targetGuid = project.TargetGuidByName(PBXProject.GetUnityTargetName());
+#endif
+
+    // libz.tbd for grpc ios build
+    project.AddFrameworkToProject(targetGuid, "libz.tbd", false);
+
+    // bitode is disabled for libgrpc_csharp_ext, so need to disable it for the whole project
+    project.SetBuildProperty(targetGuid, "ENABLE_BITCODE", "NO");
+
+    File.WriteAllText(projectPath, project.WriteToString());
+  }
 
     /// <summary>
     /// We need to set particular build settings on the UnityFramework target.
