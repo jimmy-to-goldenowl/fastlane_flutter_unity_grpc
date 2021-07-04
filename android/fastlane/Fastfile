@@ -5,7 +5,10 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-FIREBASE_CLI_TOKEN = ENV["FIREBASE_CLI_TOKEN"]
+firebaseTestApp = "1:387777038403:android:e0f3f63fcbdce9e98becf6"
+firebaseTestGroup = "eng, goldenowl"
+firebaseTestEmail = "jimmy.to.goldenowl@gmail.com"
+aabPath = '../build/app/outputs/bundle/release/app-release.aab'
 
 default_platform(:android)
 
@@ -17,12 +20,24 @@ platform :android do
   desc "Submit a new beta build to Google Play"
   lane :beta do
     sh "flutter build appbundle -v"
-    # upload_to_play_store
+    upload_to_play_store(
+      track: 'beta',
+      aab: aabPath,
+      json_key_data: ENV['PLAY_STORE_CONFIG_JSON'],
+    )
   end
 
   desc "Deploy with Firebase"
   lane :firebase do
-    sh "flutter build apk"
-    # firebase_app_distribution
+    # sh "flutter build appbundle -v"
+    firebase_app_distribution(
+      app: firebaseTestApp,
+      testers: firebaseTestEmail,
+      groups: firebaseTestGroup,
+      release_notes: sh("git log -1 --pretty='%s'"),
+      android_artifact_type: "AAB", # APK or AAB
+      android_artifact_path: aabPath,
+      firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"]
+    )
   end
 end

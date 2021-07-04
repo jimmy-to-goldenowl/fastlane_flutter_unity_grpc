@@ -9,8 +9,9 @@ xcodeproj = './Runner.xcodeproj'
 workspace = './Runner.xcworkspace'
 keychainName = "loveblocs_custom"
 keychainPassword = "LoveBlocks2021"
-testGroup = "eng, goldenowl"
-testApp = "1:387777038403:ios:d50ba4a78265f69e8becf6"
+firebaseTestGroup = "eng, goldenowl"
+firebaseTestEmail = "jimmy.to.goldenowl@gmail.com"
+firebaseTestApp = "1:387777038403:ios:d50ba4a78265f69e8becf6"
 
 def delete_temp_keychain(name)
   delete_keychain(
@@ -139,7 +140,14 @@ platform :ios do
   lane :firebase do
     build(release: true)
 
-    # firebase_app_distribution
+    firebase_app_distribution(
+      app: firebaseTestApp,
+      groups: firebaseTestGroup,
+      testers: firebaseTestEmail,
+      release_notes: sh("git log -1 --pretty='%s'"),
+      ipa_path: "Runner.ipa",
+      firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"]
+    )
     delete_temp_keychain(keychainName)
   end
 
