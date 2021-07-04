@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.loveblocks.protobuf": "https://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@github.com/loveblocks-labs/hello-world-protobuf-definitions.git?path=/unity/Packages/loveblocks_proto#3285b109dd0e624b574f34f3460ec5c89874b192",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.2.1",
     "com.unity.ide.vscode": "1.2.3",

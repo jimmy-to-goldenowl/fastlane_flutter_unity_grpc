@@ -30,14 +30,14 @@ platform :android do
   desc "Deploy with Firebase"
   lane :firebase do
     # sh "flutter build appbundle -v"
-    firebase_app_distribution(
-      app: firebaseTestApp,
-      testers: firebaseTestEmail,
-      groups: firebaseTestGroup,
-      release_notes: sh("git log -1 --pretty='%s'"),
-      android_artifact_type: "AAB", # APK or AAB
-      android_artifact_path: aabPath,
-      firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"]
-    )
+    # firebase_app_distribution(
+    #   app: firebaseTestApp,
+    #   testers: firebaseTestEmail,
+    #   groups: firebaseTestGroup,
+    #   release_notes: sh("git log -1 --pretty='%s'"),
+    #   android_artifact_type: "AAB", # APK or AAB
+    #   android_artifact_path: aabPath,
+    #   firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"]
+    # )
   end
 end

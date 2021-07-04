@@ -35,13 +35,6 @@ dependencies:
   beamer: ^0.14.1
   flutter_bloc: ^7.0.1
 
-  ## custom ##
-  loveblocks_proto:
-    git:
-      url: https://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@github.com/loveblocks-labs/hello-world-protobuf-definitions.git
-      ref: 83d61ce65003fbee4bf620dea7a6fe1c465b78f5
-      path: dart/loveblocks_proto
-  
 dev_dependencies:
   flutter_test:
     sdk: flutter

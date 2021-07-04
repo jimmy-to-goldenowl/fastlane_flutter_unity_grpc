@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:loveblocks/features/demo_unity/screen/flutter_client_widget.dart';
 import 'package:loveblocks/features/demo_unity/screen/unity_client_widget.dart';
 
 class DemoUnityScreen extends StatelessWidget {
@@ -11,7 +10,6 @@ class DemoUnityScreen extends StatelessWidget {
         title: const Text('Demo Protos'),
       ),
       body: UnityClientWidget(),
-      bottomNavigationBar: FlutterClientWidget(),
     );
   }
 }

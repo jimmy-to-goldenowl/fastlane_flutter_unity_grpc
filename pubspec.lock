@@ -309,13 +309,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
-  fixnum:
-    dependency: transitive
-    description:
-      name: fixnum
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -411,20 +404,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.0"
-  googleapis_auth:
-    dependency: transitive
-    description:
-      name: googleapis_auth
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.0"
-  grpc:
-    dependency: transitive
-    description:
-      name: grpc
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
   http:
     dependency: transitive
     description:
@@ -432,13 +411,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.13.3"
-  http2:
-    dependency: transitive
-    description:
-      name: http2
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -493,15 +465,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  loveblocks_proto:
-    dependency: "direct main"
-    description:
-      path: "dart/loveblocks_proto"
-      ref: "83d61ce65003fbee4bf620dea7a6fe1c465b78f5"
-      resolved-ref: "83d61ce65003fbee4bf620dea7a6fe1c465b78f5"
-      url: "https://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@github.com/loveblocks-labs/hello-world-protobuf-definitions.git"
-    source: git
-    version: "1.1.0"
   matcher:
     dependency: transitive
     description:
@@ -586,13 +549,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
-  protobuf:
-    dependency: transitive
-    description:
-      name: protobuf
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   provider:
     dependency: transitive
     description:
