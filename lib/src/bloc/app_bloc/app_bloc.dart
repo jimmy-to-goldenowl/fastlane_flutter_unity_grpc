@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:loveblocks/protos/run_server.dart';
 import 'package:loveblocks/services/auth_service.dart';
 part 'app_event.dart';
 part 'app_state.dart';
@@ -11,6 +12,7 @@ part 'app_state.dart';
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(const AppState.initial()) {
     _userSubscription = _authService.userStream.listen(_onUserChanged);
+    createFlutterUnityServerIsolate();
   }
   final AuthService _authService = AuthService.instance;
   late final StreamSubscription<User?> _userSubscription;
@@ -29,7 +31,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
-  Future<AppState> _mapUserChangedToState(AppUserChanged event, AppState state) async {
+  Future<AppState> _mapUserChangedToState(
+      AppUserChanged event, AppState state) async {
     final String? uid = event.user?.uid;
     if (uid != null) {
       return AppState.authenticated(uid);
