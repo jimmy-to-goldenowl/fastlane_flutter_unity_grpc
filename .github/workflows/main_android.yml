@@ -34,8 +34,14 @@ jobs:
       # Checkout
       - name: Checkout repository
         uses: actions/checkout@v2
-        # with:
-          # lfs: true
+        
+       # Setup ENV 
+      - name: Create ENV file
+        id: terminal-create-env
+        run: |
+          touch .env
+          echo ${{ format('SOMETHING_SECRET={0}', ${{secrets.FASTLANE_USER}}) }} >> .env
+          cat .env
 
       # Cache Library
       - uses: actions/cache@v2
