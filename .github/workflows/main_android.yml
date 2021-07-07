@@ -40,7 +40,7 @@ jobs:
         id: terminal-create-env
         run: |
           touch .env
-          echo ${{ format('SOMETHING_SECRET={0}', ${{secrets.FASTLANE_USER}}) }} >> .env
+          echo SOMETHING_SECRET=${{secrets.FASTLANE_USER}} >> .env
           cat .env
 
       # Cache Library
